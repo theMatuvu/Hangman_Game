@@ -5,11 +5,11 @@ public class FctPendu {
     public static Pendu init(String mot) {
         assert(mot.length()>0);
         Pendu p = new Pendu();
-        p.mot = mot;
-        p.Nberreur = 0;
-        p.trouvées = new boolean[mot.length()];
+        p.setMot(mot);
+        p.setNberreur(0);
+        p.setTrouvées(new boolean[mot.length()]) ;
         for(int i = 0;i<mot.length();++i){
-            p.trouvées[i]= false;
+            p.getTrouvées()[i]= false;
         }
         // Arrays.fill(p.trouvées, false);
 
@@ -18,24 +18,25 @@ public class FctPendu {
     public static void jouer(Pendu p, char l){
         assert (!estFini(p));
         boolean erreur = false;
-        for (int i = 0;i< p.mot.length();++i){
-            if (p.mot.charAt(i) == l){
-                p.trouvées[i]=true;
+        for (int i = 0;i< p.getMot().length();++i){
+            if (p.getMot().charAt(i) == l){
+
+                p.ajtTrouvées(i,true);
                 erreur = true;
             }
         }
         if (!erreur)
-            ++p.Nberreur;
+            p.setNberreur(p.getNberreur()+1);
 
     }
 
     public static boolean estFini(Pendu p){
 
-        if (p.Nberreur == Pendu.ErMax)
+        if (p.getNberreur() == p.getErMax())
             return true;
 
-        for(int i =0;i<p.mot.length();++i){
-            if (!p.trouvées[i])
+        for(int i =0;i<p.getMot().length();++i){
+            if (!p.getTrouvées()[i])
                 return false;
         }
 
@@ -43,26 +44,26 @@ public class FctPendu {
     }
     public static boolean estGagne(Pendu p){
         assert (estFini(p));
-        return p.Nberreur != Pendu.ErMax;
+        return p.getNberreur() != p.getErMax();
     }
     public static String toString(Pendu p){
         StringBuilder phrase = new StringBuilder(">>");
 
-        for(int i = 0;i<p.mot.length();++i){
-            if (p.trouvées[i])
-                phrase.append(p.mot.charAt(i));
+        for(int i = 0;i<p.getMot().length();++i){
+            if (p.getTrouvées()[i])
+                phrase.append(p.getMot().charAt(i));
             else
                 phrase.append("_");
         }
 
         phrase.append("   >>");
-        phrase.append(p.Nberreur);
-        if (p.Nberreur>1)
+        phrase.append(p.getNberreur());
+        if (p.getNberreur()>1)
             phrase.append(" erreurs\n");
         else
             phrase.append(" erreur\n");
 
-        switch(p.Nberreur){
+        switch(p.getNberreur()){
 
             case 1:
                 phrase.append("  \n" +
@@ -165,11 +166,9 @@ public class FctPendu {
     String mot ="error";
      try
     {
-        // Le fichier d'entrée
-        FileInputStream file = new FileInputStream("pli07.txt");
+        FileInputStream file = new FileInputStream("BDD_Words.txt");
         Scanner scanner = new Scanner(file);
 
-        //renvoie true s'il y a une autre ligne à lire
         int Num = NumRdm();
         System.out.println(Num);
 

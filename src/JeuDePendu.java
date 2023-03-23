@@ -12,24 +12,23 @@ public class JeuDePendu {
         Scanner sc;
         sc = new Scanner(System.in);
 
-        System.out.println("Voulez vous choisir un mot(1) ou jouer contre l'ordinateur(2)");
+        System.out.println("Choose a word(1) or take a random word(2)");
         String choix = sc.next();
         String mot = null;
         while (mot == null) {
             if (Objects.equals(choix, "1")) {
-                System.out.println("Saisissez votre mot");
-                mot = sc.next();
+                System.out.println("Write your word");
+                mot = sc.next().toUpperCase();
             }
             else if (Objects.equals(choix, "2")){
                 mot = FctPendu.MotAléatoire();
             }
             else{
-                System.out.println("Voulez vous choisir un mot(1) ou jouer contre l'ordinateur(2)");
+                System.out.println("Choose a word(1) or take a random word(2)");
                 choix = sc.next();
             }
         }
 
-        //mot = Normalizer.normalize(mot, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
         Pendu p = FctPendu.init(mot);
         while (!FctPendu.estFini(p)){
             String pc = FctPendu.toString(p);
@@ -40,15 +39,15 @@ public class JeuDePendu {
             Nbcoup++;
         }
         if (FctPendu.estGagne(p)){
-            System.out.println("Bravo");
-            String c = (Nbcoup>1)? "coups":"coup";
-            String er = (p.Nberreur>1)? "erreurs":"erreur";
-            System.out.println("Vous avez trouvé " + p.mot + " en " + Nbcoup +" " + c + " et en " + p.Nberreur +" "+ er);
+            System.out.println("Congratulation");
+            String c = (Nbcoup>1)? "moves":"move";
+            String er = (p.getNberreur()>1)? "mistakes":"mistake";
+            System.out.println("You find " + p.getMot() + " in " + Nbcoup +" " + c + " and " + p.getNberreur() +" "+ er);
 
         }
         else {
             System.out.println("Arggg...");
-            System.out.println("Le mot était " + p.mot);
+            System.out.println("The word was " + p.getMot());
             System.out.println("======Y======\n" +
                     "||  / |\n" +
                     "|| /  |\n" +
