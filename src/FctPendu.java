@@ -160,7 +160,7 @@ public class FctPendu {
         return phrase.toString();
     }
     public static int NumRdm(){
-        return Robot.MIN + (int)(Math.random() * ((Robot.Max - Robot.MIN) + 1));
+        return Robot.getMIN() + (int)(Math.random() * ((Robot.getMax() - Robot.getMIN()) + 1));
     }
     public static String MotAléatoire() {
     String mot ="error";
